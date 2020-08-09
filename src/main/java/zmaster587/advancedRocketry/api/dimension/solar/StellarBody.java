@@ -24,12 +24,14 @@ public class StellarBody {
 	float size;
 	public List<StellarBody> subStars;
 	float starSeperation;
+	private boolean isBlackHole;
 
 	public StellarBody() {
 		planets = new HashMap<Integer,IDimensionProperties>();
 		size = 1f;
 		subStars = new LinkedList<StellarBody>();
 		starSeperation = 5f;
+		isBlackHole = false;
 	}
 	
 	public List<StellarBody> getSubStars() {
@@ -40,7 +42,16 @@ public class StellarBody {
 		star.setName(name);
 		subStars.add(star);
 	}
-	
+
+	public boolean isBlackHole() {
+		return isBlackHole;
+	}
+
+	public void setBlackHole(boolean isBlackHole) {
+		this.isBlackHole = isBlackHole;
+	}
+
+
 	public int getDisplayRadius() {
 		return (int)(100*size);
 	}
@@ -214,6 +225,7 @@ public class StellarBody {
 		nbt.setShort("posZ", posZ);
 		nbt.setFloat("size", size);
 		nbt.setFloat("seperation", starSeperation);
+		nbt.setBoolean("isBlackHole",isBlackHole);
 		
 		NBTTagList list = new NBTTagList();
 		
@@ -239,6 +251,8 @@ public class StellarBody {
 		
 		if(nbt.hasKey("seperation"))
 			starSeperation = nbt.getFloat("seperation");
+
+		isBlackHole = nbt.getBoolean("isBlackHole");
 		
 		subStars.clear();
 		if(nbt.hasKey("subStars")) {
@@ -250,5 +264,9 @@ public class StellarBody {
 				subStars.add(star);
 			}
 		}
+	}
+
+	public float getStarSeparation(){
+		return starSeperation;
 	}
 }

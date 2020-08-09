@@ -415,6 +415,11 @@ public class XMLPlanetLoader {
 			} catch (Exception e) {
 				AdvancedRocketry.logger.warn("Invalid number of planets specified in xml config!");
 			}
+
+			nameNode = planetNode.getAttributes().getNamedItem("blackHole");
+			if(nameNode != null && nameNode.getNodeValue().equalsIgnoreCase("true")) {
+				star.setBlackHole(true);
+			}
 		}
 
 		star.setId(starId++);
@@ -455,6 +460,11 @@ public class XMLPlanetLoader {
 				} catch (NumberFormatException e) {
 					AdvancedRocketry.logger.warn("Error Reading star " + star.getName());
 				}
+			}
+
+			nameNode = planetNode.getAttributes().getNamedItem("blackHole");
+			if(nameNode != null && nameNode.getNodeValue().equalsIgnoreCase("true")) {
+				star.setBlackHole(true);
 			}
 		}
 		
@@ -507,11 +517,11 @@ public class XMLPlanetLoader {
 
 		for(StellarBody star : stars) {
 			outputString = outputString + "\t<star name=\"" + star.getName() + "\" temp=\"" + star.getTemperature() + "\" x=\"" + star.getPosX() 
-					+ "\" y=\"" + star.getPosZ() + "\" size=\"" + star.getSize() + "\" numPlanets=\"0\" numGasGiants=\"0\">\n";
+					+ "\" y=\"" + star.getPosZ() + "\" size=\"" + star.getSize() + "\" numPlanets=\"0\" numGasGiants=\"0\""+" blackHole=\""+star.isBlackHole()+"\">\n";
 
 			for(StellarBody star2 : star.getSubStars()) {
 				outputString = outputString + "\t\t<star temp=\"" + star2.getTemperature() + 
-						"\" size=\"" + star2.getSize() + "\" seperation=\"" + star2.getStarSeperation() + "\" />\n";
+						"\" size=\"" + star2.getSize() + "\" seperation=\"" + star2.getStarSeperation() + "\""+" blackHole=\""+star2.isBlackHole()+"\"/>\n";
 
 			}
 			

@@ -1919,6 +1919,7 @@ public class AdvancedRocketry {
 				DimensionManager.getInstance().getStar(star.getId()).setSize(star.getSize());
 				DimensionManager.getInstance().getStar(star.getId()).setTemperature(star.getTemperature());
 				DimensionManager.getInstance().getStar(star.getId()).subStars = star.subStars;
+				DimensionManager.getInstance().getStar(star.getId()).setBlackHole(star.isBlackHole());
 			}
 			
 			for(DimensionProperties properties : dimCouplingList.dims) {

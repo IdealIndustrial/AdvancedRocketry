@@ -14,15 +14,13 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import scala.util.Random;
 import zmaster587.advancedRocketry.AdvancedRocketry;
-import zmaster587.advancedRocketry.api.AdvancedRocketryBiomes;
-import zmaster587.advancedRocketry.api.Configuration;
-import zmaster587.advancedRocketry.api.IAtmosphere;
-import zmaster587.advancedRocketry.api.SatelliteRegistry;
+import zmaster587.advancedRocketry.api.*;
 import zmaster587.advancedRocketry.api.atmosphere.AtmosphereRegister;
 import zmaster587.advancedRocketry.api.dimension.IDimensionProperties;
 import zmaster587.advancedRocketry.api.dimension.solar.StellarBody;
 import zmaster587.advancedRocketry.api.satellite.SatelliteBase;
 import zmaster587.advancedRocketry.atmosphere.AtmosphereType;
+import zmaster587.advancedRocketry.inventory.TextureResources;
 import zmaster587.advancedRocketry.network.PacketDimInfo;
 import zmaster587.advancedRocketry.network.PacketSatellite;
 import zmaster587.advancedRocketry.stations.SpaceObjectManager;
@@ -384,6 +382,8 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
 	 * @return the host star for this planet
 	 */
 	public StellarBody getStar() {
+		if(isStar())
+			return getStarData();
 		if(star == null)
 			star = DimensionManager.getInstance().getStar(starId);
 		return star;
@@ -395,6 +395,14 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
 		
 	public boolean isGasGiant() {
 		return isGasGiant;
+	}
+
+	public boolean isStar() {
+		return planetId >= 10000;
+	}
+
+	public StellarBody getStarData() {
+		return DimensionManager.getInstance().getStar(planetId - 10000);
 	}
 
 	public void setGasGiant(boolean gas) {
